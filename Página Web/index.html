@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Kevo - Taller Mecánico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos generales */
+        :root {
+            --azul: #1e3a8a;
+            --azul-claro: #3b82f6;
+            --blanco: #ffffff;
+            --gris: #f3f4f6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--gris);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--azul);
+            color: var(--blanco);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+            
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--azul-claro);
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(30, 58, 138, 0.8), rgba(30, 58, 138, 0.8)), url('https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--blanco);
+            margin-top: 70px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--azul-claro);
+            color: var(--blanco);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--blanco);
+            color: var(--azul);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background-color: var(--blanco);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--azul);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--azul-claro);
+            margin: 15px auto;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 0 20px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background-color: var(--gris);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .service-card {
+            background-color: var(--blanco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .service-card:hover .service-img img {
+            transform: scale(1.1);
+        }
+        
+        .service-content {
+            padding: 20px;
+        }
+        
+        .service-content h3 {
+            color: var(--azul);
+            margin-bottom: 10px;
+        }
+        
+        /* Appointment Section */
+        .appointment {
+            padding: 80px 0;
+            background-color: var(--blanco);
+        }
+        
+        .appointment-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--gris);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .appointment-form input,
+        .appointment-form select,
+        .appointment-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .appointment-form .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .appointment-form .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Social Media Section */
+        .social-media {
+            padding: 60px 0;
+            background-color: var(--azul);
+            color: var(--blanco);
+            text-align: center;
+        }
+        
+        .social-media .section-title {
+            color: var(--blanco);
+        }
+        
+        .social-media .section-title:after {
+            background-color: var(--azul-claro);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .social-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--blanco);
+            transition: transform 0.3s;
+        }
+        
+        .social-icon i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            color: var(--azul-claro);
+        }
+        
+        .phone-numbers {
+            margin-top: 40px;
+        }
+        
+        .phone-numbers a {
+            display: block;
+            color: var(--blanco);
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .phone-numbers a:hover {
+            color: var(--azul-claro);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background-color: var(--gris);
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .contact-info, .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-info h3 {
+            color: var(--azul);
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+        }
+        
+        .map-container {
+            margin-top: 30px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--azul);
+            color: var(--blanco);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 60px;
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--blanco);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--azul-claro);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Animaciones */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--azul);
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease-in-out;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-text, .about-image {
+                padding: 10px;
+            }
+            
+            .about-image {
+                margin-top: 30px;
+            }
+            
+            .appointment-form .form-row {
+                flex-direction: column;
+            }
+            
+            .social-icons {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Taller El Kevo">
+                <h1>El Kevo</h1>
+            </div>
+            
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#citas">Agendar Cita</a></li>
+                    <li><a href="#redes">Redes Sociales</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+   
+             <h2>Taller Mecánico "El Kevo"</h2>
+                <p>NO TIENES QUE QUEDARTE A ESPERAR, PUEDES DEJARLO EN MUY BUENAS MANOS Y QUE TE BRINDEMOS UN BUEN TRABAJO PARA CUANDO REGRESES POR ÉL</p>
+                <a href="#citas" class="btn">Agendar Cita</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Sobre Nosotros</h2>
+            
+            <div class="about-content">
+                <div class="about-text animate-on-scroll">
+                    <p>EL TALLER MECÁNICO "EL KEVO" CUENTA CON UNA MUY BUENA CATEGORIA DE PRODUCTOS. CONCIENTE A TU VEHÍCULO PARA QUE AL IGUAL QUE TÚ ESTÉ MUY LINDO Y EN PERFECTAS CONDICIONES.</p>
+                    <p>TE PROMETEMOS UN MUY BUEN SERVICIO :)</p>
+                    <p>Nuestro taller está ubicado en:</p>
+                    <p>📍 Colonia La Calzada, Tuxpan, Veracruz, kilómetro 8 de la carretera a la barra, Tuxpan cerca de la playa</p>
+                    <iframe src="https://maps.google.com/maps?q=Colonia%20La%20Calzada,%20Tuxpan,%20Veracruz&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
+                </div>
+                
+                <div class="about-image animate-on-scroll">
+                    <img src="taller-kevo.jpg" alt="Taller El Kevo">
+               
+                </div>
+                <div class="about-extra-text animate-on-scroll">
+                    <p><b>MISIÓN:</b></p>
+                    <p>Nuestra misión es brindar un servicio de alta calidad, profesional y eficiente al reparar los autos otorgando soluciones
+                     rápidas y seguras para nuestros clientes.  </p>
+             </div>
+
+                <div class="about-extra-text animate-on-scroll">
+                    <p><b>VISIÓN:</b></p>
+                    <p>Ser un taller de referencia de nuestros clientes. Líder del mercado y reconocido en la región. </p>
+             </div>
+                
+            </div>
+                <div class="about-extra-text animate-on-scroll">
+                        
+                    <p><b>VALORES DE LA EMPRESA</b></p>
+                 <ul style="margin-top: 10px; margin-left: 20px; font-size: 0.9rem;">
+                    <li>Honestidad</li>
+                    <li>Responsabilidad</li>
+                    <li>Profesionalismo</li>
+                    <li>Calidad</li>
+                    <li>Respeto</li>
+                    <li>Trabajo en equipo </li>
+              </ul> 
+         </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Nuestros Servicios</h2>
+            
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mantenimiento preventivo">
+                    </div>
+                    <div class="service-content">
+                        <h3>Mantenimiento Preventivo</h3>
+                        <p>Servicios programados para mantener tu vehículo en óptimas condiciones y evitar fallas costosas.</p>
+                        <ul style="margin-top: 10px; margin-left: 20px; font-size: 0.9rem;">
+                            <li>Cambio de aceite y filtro</li>
+                            <li>Afinación menor</li>
+                            <li>Afinación mayor</li>
+                            <li>Cambio de balatas y ajuste de frenos</li>
+                            <li>Cambio de batería</li>
+                            <li>Cambio de llantas para coches</li>
+                            <li>Cambio de llantas para camionetas</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Reparación mecánica">
+                    </div>
+                    <div class="service-content">
+                        <h3>Reparación Mecánica</h3>
+                        <p>Soluciones integrales para problemas en motor, transmisión, suspensión y más.</p>
+                        <ul style="margin-top: 10px; margin-left: 20px; font-size: 0.9rem;">
+                            <li>Cambio de suspensión y amortiguadores</li>
+                            <li>Cambio de clutch</li>
+                            <li>Sistema de enfriamiento</li>
+                            <li>Rectificación de discos/tambores</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1551830820-330a71b99659?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Servicios especializados">
+                    </div>
+                    <div class="service-content">
+                        <h3>Servicios Especializados</h3>
+                        <p>Técnicas avanzadas para necesidades específicas de tu vehículo.</p>
+                        <ul style="margin-top: 10px; margin-left: 20px; font-size: 0.9rem;">
+                            <li>Diagnostico con escáner</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Appointment Section -->
+    <section class="appointment" id="citas">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Agendar Cita</h2>
+            
+            <div class="appointment-container animate-on-scroll">
+                <form class="appointment-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Nombre completo</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle">Tipo de vehículo</label>
+                            <input type="text" id="vehicle" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Fecha preferida</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Hora preferida</label>
+                            <input type="time" id="time" required>
+                        </div>
+                    </div>
+                    
+                    <label for="service">Servicio requerido</label>
+                    <select id="service" required>
+                        <option value="">Seleccione un servicio</option>
+                        <option value="mantenimiento">Mantenimiento preventivo</option>
+                        <option value="reparacion">Reparación mecánica</option>
+                        <option value="especializado">Servicio especializado</option>
+                        <option value="diagnostico">Diagnóstico general</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                    
+                    <label for="message">Detalles adicionales</label>
+                    <textarea id="message" placeholder="Describe el problema o servicio que necesitas"></textarea>
+                    
+                    <button type="submit" class="btn">Solicitar Cita</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Social Media Section -->
+    <section class="social-media" id="redes">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Síguenos en Redes Sociales</h2>
+            <p class="animate-on-scroll">Mantente al tanto de nuestras promociones y consejos para el cuidado de tu vehículo</p>
+            
+            <div class="social-icons">
+                <a href="#" class="social-icon animate-on-scroll">
+                    <a href="https://www.facebook.com/share/1AcD5Edh5j/" target="_blank">📘 Facebook: ElKevo Mecanic</a>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="social-icon animate-on-scroll">
+                    <a href="https://www.instagram.com/el.kevo.2025" target="_blank">📷 Instagram: @el.kevo.2025</a>
+
+                    <span>Instagram</span>
+                </a>
+            </div>
+            
+            <div class="phone-numbers animate-on-scroll">
+                <h3>Contáctanos directamente</h3>
+                <a href="tel:527831241099"><i class="fas fa-phone"></i> (52) 783-124-1099</a>
+                <a href="tel:2294132598"><i class="fas fa-phone"></i> 229-413-2598</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Contacto</h2>
+            
+            <div class="contact-container">
+                <div class="contact-info animate-on-scroll">
+                    <h3>Información de Contacto</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Colonia La Calzada, Tuxpan, Veracruz, kilómetro 8 de la carretera a la barra, Tuxpan cerca de la playa</p>
+                    <p><i class="fas fa-phone"></i> (52) 783-124-1099</p>
+                    <p><i class="fas fa-phone"></i> 229-413-2598</p>
+                    <p><i class="fas fa-clock"></i> Lunes a Viernes: 10:00 am - 18:00 pm</p>
+                    <p><i class="fas fa-clock"></i> Sábados: 10:00 am - 15:00 pm</p>
+                    
+                    <div class="map-container">
+                        <iframe src="https://maps.google.com/maps?q=Colonia%20La%20Calzada,%20Tuxpan,%20Veracruz&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <div class="contact-form animate-on-scroll">
+                    <h3>Envíanos un mensaje</h3>
+                    <form>
+                        <input type="text" placeholder="Nombre" required>
+                        <input type="email" placeholder="Correo electrónico" required>
+                        <input type="tel" placeholder="Teléfono">
+                        <textarea placeholder="Mensaje" required></textarea>
+                        <button type="submit" class="btn">Enviar Mensaje</button>
+                    </form>
+                        
+                </div>
+            </div>
+<iframe src="https://forms.gle/zHkPPcHqZctppHom8" 
+        width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="Taller El Kevo">
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#nosotros">Nosotros</a>
+                    <a href="#servicios">Servicios</a>
+                    <a href="#citas">Agendar Cita</a>
+                    <a href="#redes">Redes Sociales</a>
+                    <a href="#contacto">Contacto</a>
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2025 Taller Mecánico "El Kevo". Todos los derechos reservados.</p>
+                    <p>Síguenos: @el.kevo.2025</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Menú móvil
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        
+        // Animaciones al hacer scroll
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        const navLinks = document.querySelectorAll('nav ul li a');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (nav.classList.contains('active')) {
+                    nav.classList.remove('active');
+                }
+            });
+        });
+        
+        // Manejo del formulario de citas
+        const appointmentForm = document.querySelector('.appointment-form');
+        appointmentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('¡Gracias por agendar tu cita! Nos pondremos en contacto contigo para confirmar.');
+            appointmentForm.reset();
+        });
+    </script>
+</body>
+</html>>
